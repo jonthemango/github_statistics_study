@@ -1,10 +1,14 @@
 # GitHub Statistics Study
 An Software Engineering Statistics Study using the GitHub API.
 
-#### Authors
-Jon Mongeau
-Kerry Gougeon
-Isaac Doré 
+#### Authors and Affliations
+[Jon Mongeau](https://github.com/jonthemango)
+
+[Kerry Gougeon](https://github.com/Kerry-G)
+
+[Isaac Doré](https://github.com/Swess)
+
+[Concordia University](https://www.concordia.ca/)
 
 ## Getting Started
 Begin by installing the latest version of [Python 3](https://www.python.org/downloads/). 
