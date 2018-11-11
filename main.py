@@ -46,6 +46,7 @@ def getLanguages(repo):
         total_bytes += noBytes
         if max(prominant_lang_bytes, noBytes) == noBytes:
             prominant_lang = key
+            prominant_lang_bytes = noBytes
     return langs, total_bytes, prominant_lang
 
 def getNumberOfContributors(repo):
@@ -53,7 +54,7 @@ def getNumberOfContributors(repo):
     return len(contributors)
 
 def isLargeEnough(bytesL, C):
-    return bytesL > 10000 and C > 5
+    return bytesL > 50000 and C > 5
 
 def getLargeProject():
     isNotLargeEnough = True
@@ -77,20 +78,19 @@ def loadJsonFile(fn):
         json_data.close()
         return d
 
+def writeJsonFile(fn, data):
+    with open(fn, 'w') as outfile:
+        json.dump(data, outfile)
 
 
-
-x = getLargeProject()
-dump(x)
-
-def main():
+def main(DEFAULT=50):
     sample_data_set = {}
     explicit_data_set = {}
     implicit_data_set = {}
 
-    langs_json = loadJsonFile("language_types")
+    langs_json = loadJsonFile("language_types.json")
 
-    while True:
+    while len(sample_data_set) < DEFAULT:
         repo_obj = getLargeProject()
 
         # declare variables
@@ -100,6 +100,7 @@ def main():
         prominent_lang = repo_obj['prominant_lang']
         total_size = repo_obj['total_size']
 
+
         if repo_obj['id'] in sample_data_set or langs == {} or prominent_lang not in langs_json:
             # Preserve Independance 
             # exclude projects with no programming languages
@@ -108,6 +109,10 @@ def main():
         elif langs_json[prominent_lang] == "":
             # If language is defined but empty then ignore, type of lang is unknown 
             continue
+        else:
+            dump("===START===")
+            dump(repo_obj)
+            dump("===END===")
         
         # Insert the repo into our sample data set
         sample_data_set[id] = repo_obj  
@@ -117,6 +122,10 @@ def main():
             explicit_data_set[id] = repo_obj
         elif langs_json[prominent_lang] == "implicit":
             implicit_data_set[id] = repo_obj
-        
+    writeJsonFile("sample_data.json", sample_data_set)
+    writeJsonFile("implicit_data.json", implicit_data_set)
+    writeJsonFile("explicit_data.json", explicit_data_set)
 
 
+if __name__ == '__main__':
+    main()
