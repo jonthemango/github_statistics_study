@@ -18,12 +18,11 @@ dump = pprint.PrettyPrinter(indent=4).pprint
 def githubRequest(req, params={}):
     try:
         from config import oauth
-        params["access_token"] = oauth        
+        params["access_token"] = oauth    
         return requests.get(req, params=params).json()
     except Exception as e:
         return str(e)
 
-# https://api.github.com/repositories?since=364
 def getRandomRepo():
     while True:
         id_of_this_repo = 156947808
@@ -54,7 +53,7 @@ def getNumberOfContributors(repo):
     return len(contributors)
 
 def isLargeEnough(bytesL, C):
-    return bytesL > 50000 and C > 5
+    return bytesL > 50000 and C > 10
 
 def getLargeProject():
     isNotLargeEnough = True
@@ -88,7 +87,7 @@ def main(DEFAULT=50):
     explicit_data_set = {}
     implicit_data_set = {}
 
-    langs_json = loadJsonFile("language_types.json")
+    langs_json = loadJsonFile("language_data/language_types.json")
 
     while len(sample_data_set) < DEFAULT:
         repo_obj = getLargeProject()
@@ -96,9 +95,7 @@ def main(DEFAULT=50):
         # declare variables
         id = repo_obj['id']
         langs = repo_obj['langs']
-        contributors = repo_obj['contributors']
         prominent_lang = repo_obj['prominant_lang']
-        total_size = repo_obj['total_size']
 
 
         if repo_obj['id'] in sample_data_set or langs == {} or prominent_lang not in langs_json:
@@ -122,10 +119,10 @@ def main(DEFAULT=50):
             explicit_data_set[id] = repo_obj
         elif langs_json[prominent_lang] == "implicit":
             implicit_data_set[id] = repo_obj
-    writeJsonFile("sample_data.json", sample_data_set)
-    writeJsonFile("implicit_data.json", implicit_data_set)
-    writeJsonFile("explicit_data.json", explicit_data_set)
+    writeJsonFile("reports/sample_data.json", sample_data_set)
+    writeJsonFile("reports/implicit_data.json", implicit_data_set)
+    writeJsonFile("reports/explicit_data.json", explicit_data_set)
 
 
 if __name__ == '__main__':
-    main()
+    main(1000)
