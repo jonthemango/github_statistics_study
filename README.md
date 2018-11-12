@@ -25,7 +25,7 @@ We hypothesize that more than 50% of open source **large software projects** use
 
 ## Definitions
 #### Determining whether project is large
-We consider a large software project to have over X number of bytes and over Y contributors. The **size** of a project refers to these metrics.
+We consider a large software project to have over 500,000 bytes and over 20 contributors. The **size** of a project refers to these metrics.
 
 #### Determining whether statically typed or dynamically typed
 We will assemble a hash-table which maps the most common languages to either 'static' or 'dynamic'. If a project's top language is not included in our hash-table, the script will ask the user to input the type of the language. The list should be comprehensive and can be found in the file language-types.json. Research into every language has been conducted to assert data is correct.
@@ -34,7 +34,7 @@ We will assemble a hash-table which maps the most common languages to either 'st
 Our statistical population is large open source software engineering projects.
 
 ## Sample Size
-```N = 200``` 
+```N = 1000``` 
 
 ## How Data Sampling is conducted
 Data is sampled using the public [GitHub API](https://developer.github.com/v3/). 
