@@ -28,10 +28,19 @@ def getRandomRepo():
         id_of_this_repo = 156947808
         random_repo_id = random.randint(1,id_of_this_repo)
         request = "https://api.github.com/repositories/" + str(random_repo_id)
-        x = githubRequest(request)
+        res = githubRequest(request)
 
-        if "message" not in x:
-            return x
+        if "message" not in res:
+            return res
+        elif res["message"] == "Bad credentials": # 
+            raise Exception("Bad Credentials Exception")
+        elif res['message'] == "Not Found": # keep going 
+            continue
+        elif res['message'] == "Repository access blocked":
+            continue
+        else:
+            print(res['message'])
+            raise Exception("Unknown error.")
 
 
 def getLanguages(repo):
@@ -53,7 +62,7 @@ def getNumberOfContributors(repo):
     return len(contributors)
 
 def isLargeEnough(bytesL, C):
-    return bytesL > 50000 and C > 10
+    return bytesL > 1000000 and C > 10
 
 def getLargeProject():
     isNotLargeEnough = True
@@ -69,6 +78,7 @@ def getLargeProject():
         }
         if isLargeEnough(repo_obj["total_size"], repo_obj["contributors"]):
             isNotLargeEnough = False
+    print(repo_obj['total_size'])
     return repo_obj
 
 def loadJsonFile(fn):
@@ -90,8 +100,14 @@ def main(DEFAULT=50):
     langs_json = loadJsonFile("language_data/language_types.json")
 
     while len(sample_data_set) < DEFAULT:
-        repo_obj = getLargeProject()
-
+        try:
+            repo_obj = getLargeProject()
+            print(1)
+        except Exception as e:
+            writeJsonFile("reports/sample_data.json", sample_data_set)
+            writeJsonFile("reports/implicit_data.json", implicit_data_set)
+            writeJsonFile("reports/explicit_data.json", explicit_data_set)
+            input('file written')
         # declare variables
         id = repo_obj['id']
         langs = repo_obj['langs']
@@ -107,9 +123,10 @@ def main(DEFAULT=50):
             # If language is defined but empty then ignore, type of lang is unknown 
             continue
         else:
-            dump("===START===")
-            dump(repo_obj)
-            dump("===END===")
+            #dump("===START===")
+            #dump(repo_obj)
+            #dump("===END===")
+            pass
         
         # Insert the repo into our sample data set
         sample_data_set[id] = repo_obj  
@@ -125,4 +142,4 @@ def main(DEFAULT=50):
 
 
 if __name__ == '__main__':
-    main(1000)
+    main(50)

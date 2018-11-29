@@ -18,9 +18,11 @@ data = {
     "Mean" : MEAN,
     "Variance" : VARIANCE,
     "Standard Deviation" : STANDARD_DEVIATION,
-    "Median" : MEDIAN
+    "Median" : MEDIAN,
+    "N": N,
+    "P": P
 }
-
+writeJsonFile('reports/statistics.json', data)
 
 from scipy.stats import binom
 import matplotlib.pyplot as plt
@@ -30,9 +32,11 @@ x = range(N-1)
 rv = binom(N, P)
 print(N,P)
 expected_rb = binom(N, 0.5)
-ax.vlines(x, 0, rv.pmf(x), colors='k', linestyles='-', lw=10,label='Probablity of Explicitily Typed Languages')  
-ax.legend(loc='best', frameon=False)          
+ax.vlines(x, 0, rv.pmf(x), colors='k', linestyles='-', lw=10)  
+ax.legend(loc='best', frameon=False)  
+plt.suptitle('Probablity of Explicitily Typed Languages')
+plt.ylabel("pmf")       
+plt.xlabel("# of projects that are explicitly typed")      
 plt.show()
 
 
-writeJsonFile('reports/statistics.json', data)
