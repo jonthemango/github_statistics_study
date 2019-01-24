@@ -1,6 +1,10 @@
 # GitHub Statistics Study
 An Software Engineering Statistics Study using the GitHub API.
 
+## Abstract
+Our team conducted a statistical survey on the language type preferences of large software projects using a proprietary algorithm that queries the GitHub API. We found that 56% of large software projects prefer explicitly typed languages over implicitly typed languages.
+
+
 #### Authors and Affiliations
 [Jon Mongeau](https://github.com/jonthemango)
 
@@ -18,23 +22,23 @@ Run the command `python main.py`
 ## Purpose of Study
 Our goal is to determine whether large software projects prefer to use statically typed programming languages (like C, C++, Java) or dynamically typed languages (like JavaScript, Python, PHP). It is often said that as software systems increase in _size_ that static type checking becomes a useful feature for eliminating entire classes of bugs, specifically compile-time type errors.
 
-Our interest is to test whether this feature of statically typed languages makes it a more common choice for large software projects. 
+Our interest is to test whether this feature of statically typed languages makes it a more common choice for large software projects.
 
 ## Hypothesis
 We hypothesize that more than 50% of open source **large software projects** use statically type programming languages as opposed to dynamically typed languages.
 
 ## Definitions
 #### Determining whether project is large
-We consider a large software project to have over 500,000 bytes and over 20 contributors. The **size** of a project refers to these metrics.
+We consider a large software project to have over 1,000,000 bytes and over 10 contributors. The size of a project refers to these metrics.
 
 #### Determining whether statically typed or dynamically typed
-We will assemble a hash-table which maps the most common languages to either 'static' or 'dynamic'. If a project's top language is not included in our hash-table, the script will ask the user to input the type of the language. The list should be comprehensive and can be found in the file language-types.json. Research into every language has been conducted to assert data is correct.
+We will assemble a hash-table which maps the most common languages to either 'explicit' or 'implicit'. The list should be comprehensive and can be found in the file `language-types.json`. Research into every language has been conducted to assert that data is correct. Language names were taken from `linguist` provided by Github.
 
 ## Statistical Population
-Our statistical population is large open source software engineering projects.
+Our statistical population is the large open source software engineering projects found on Github.
 
 ## Sample Size
-```N = 1000``` 
+```N = 50``` 
 
 ## How Data Sampling is conducted
 Data is sampled using the public [GitHub API](https://developer.github.com/v3/). 
@@ -47,16 +51,8 @@ Data is sampled using the public [GitHub API](https://developer.github.com/v3/).
 7. The script calculates the sample mean, sample median, sample variance and sample standard deviation.
 
 ## Analysis
-Our findings found that...
+Our findings found that 28 of the 50 projects that were inspected were using explicitly typed languages.
+For more information about the math that we used to determine this please refer to https://drive.google.com/file/d/1lbfze5P0Y2RtJqXF_VUFQSkdVS3xtguR/view?usp=sharing
 
-## Final Comments 
-- Did your method of sampling result in a random sample? 
-- If your sample was not a random sample what sorts of measures could you take if you were to
-do this project again, to get a random sample?
-- Is your hypothesis true or not? Based on the experiment, would it be appropriate to write a
-revised hypothesis (“about 15% of cars in Hampstead go through yellow lights.”) 
-- Comment on whether you think your results can be extrapolated to draw more general
-conclusions, perhaps on wider populations. State your opinion and then back it up with well
-thought out reasons. 
 
 
